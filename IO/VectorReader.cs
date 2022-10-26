@@ -23,7 +23,5 @@
         }
 
         protected abstract T ParseElement(string elem);
-
-        //public static IEnumerable<double> FromFile();
     }
 }

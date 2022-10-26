@@ -1,4 +1,6 @@
-﻿namespace Conjugate_Gradient_Method.IO
+﻿using Conjugate_Gradient_Method.Calculus;
+
+namespace Conjugate_Gradient_Method.IO
 {
     public class MatrixReader : FileReader<SparseMatrix>
     {
