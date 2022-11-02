@@ -8,17 +8,38 @@
 
             var end = _rowPtr[rowIndex];
 
-            if (end < 0)
-                yield break;
-            //var begin = end == 0 ? 0 : _rowPtr[rowIndex - 1] + 1;
-            
-            var begin = rowIndex == 0 || end == 0
+            var begin = rowIndex == 0
                 ? 0
-                : _rowPtr[rowIndex - 1] + 1;
+                : _rowPtr[rowIndex - 1];
 
-
-            for (int i = begin; i <= end; i++)
+            for (int i = begin; i < end; i++)
                 yield return new IndexValue(_columnPtr[i], Values[i]);
+        }
+
+        public void Multiply(double[] vector, double[] result)
+        {
+            if (vector.Length != result.Length) throw new IndexOutOfRangeException(nameof(vector));
+
+            for (var i = 0; i < vector.Length; i++)
+            {
+                foreach (var (columnIndex, value) in ColumnIndexValuesByRow(i))
+                {
+                    result[i] += value * vector[columnIndex];
+                }
+            }
+        }
+
+        public void MultiplyTranspose(double[] vector, double[] result)
+        {
+            if (vector.Length != result.Length) throw new IndexOutOfRangeException(nameof(vector));
+
+            for (var i = 0; i < vector.Length; i++)
+            {
+                foreach (var (columnIndex, value) in ColumnIndexValuesByRow(i))
+                {
+                    result[columnIndex] += value * vector[i];
+                }
+            }
         }
 
         public double[] Values { get; }
@@ -27,7 +48,7 @@
 
         private readonly int[] _rowPtr;
         private readonly int[] _columnPtr;
-        
+
         public SparseMatrixTriangle(double[] values, int[] rowPtr, int[] columnPtr)
         {
             Values = values;

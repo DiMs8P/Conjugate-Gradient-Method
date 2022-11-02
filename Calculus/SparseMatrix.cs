@@ -13,23 +13,29 @@
             Diag = diag;
         }
 
-        public static double[] Multiply(SparseMatrix matrix, double[] vector)
+        public double[] Multiply(double[] vector)
         {
             var result = new double[vector.Length];
 
+            L.Multiply(vector, result);
+            U.Multiply(vector, result);
             for (var i = 0; i < vector.Length; i++)
             {
-                foreach (var (index, value) in matrix.L.ColumnIndexValuesByRow(i))
-                {
-                    result[i] += value * vector[index];
-                }
+                result[i] += Diag[i] * vector[i];
+            }
 
-                result[i] += matrix.Diag[i] * vector[i];
+            return result;
+        }
 
-                foreach (var (index, value) in matrix.U.ColumnIndexValuesByRow(i))
-                {
-                    result[i] += value * vector[index];
-                }
+        public double[] MultiplyTranspose(double[] vector)
+        {
+            var result = new double[vector.Length];
+
+            L.MultiplyTranspose(vector, result);
+            U.MultiplyTranspose(vector, result);
+            for (var i = 0; i < vector.Length; i++)
+            {
+                result[i] += Diag[i] * vector[i];
             }
 
             return result;
