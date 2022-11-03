@@ -8,7 +8,7 @@
             double[] discrepancy = MultiplyFourMatrix(matrix, factorizationMatrix, CalcDiscrepancy(f, matrix.Multiply(initialX)));
             InitX(initialX, matrix.U);
 
-            IterationVariables methodData = new IterationVariables(initialX, 0, discrepancy, discrepancy, 0);
+            IterationVariables methodData = new (initialX, 0, discrepancy, discrepancy, 0);
 
             var fNorm = Math.Norm(f);
             var relativeDiscrepancy = Math.Norm(methodData.Discrepancy) / fNorm;
@@ -55,7 +55,7 @@
             return MultiplyFourMatrix(A, factorizationMatrix, A.Multiply(result));
         }
 
-        private static void Iterate(SparseMatrix A, SparseMatrix factorizationMatrix, ref IterationVariables methodData)
+        private static void Iterate(SparseMatrix A, SparseMatrix factorizationMatrix, IterationVariables methodData)
         {
             var discrepancyScalarProduct = Math.ScalarProduct(methodData.Discrepancy, methodData.Discrepancy);
             methodData.Step = discrepancyScalarProduct /
@@ -63,7 +63,9 @@
                                     MultiplySixMatrix(A, factorizationMatrix, methodData.Descent),
                                     methodData.Descent);
 
-            methodData.Solution = methodData.Descent.Select((elem, index) => elem * methodData.Step + methodData.Solution[index]).ToArray();
+            methodData.Solution = methodData.Descent
+                .Select((elem, index) => elem * methodData.Step + methodData.Solution[index])
+                .ToArray();
 
             methodData.Discrepancy = MultiplySixMatrix(A, factorizationMatrix, methodData.Descent)
                 .Select((elem, index) =>
