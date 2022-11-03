@@ -5,19 +5,20 @@
         public static double[] CalcX(SparseMatrix matrix, double[] initialX, double[] f,
             SparseMatrix factorizationMatrix, MethodParams methodParams)
         {
-            double[] discrepancy = MultiplyFourFuckingMatrix(matrix, factorizationMatrix, CalcDiscrepancy(f, matrix.Multiply(initialX)));
+            double[] discrepancy = MultiplyFourMatrix(matrix, factorizationMatrix, CalcDiscrepancy(f, matrix.Multiply(initialX)));
             InitX(initialX, matrix.U);
 
             IterationVariables methodData = new IterationVariables(initialX, 0, discrepancy, discrepancy, 0);
 
             var fNorm = Math.Norm(f);
-            var relativeDiscrepancy = Math.Norm(discrepancy) / fNorm;
+            var relativeDiscrepancy = Math.Norm(methodData.Discrepancy) / fNorm;
 
-            for (var k = 1; relativeDiscrepancy > methodParams.MinDiscrepancy || k < methodParams.MaxIterations; k++)
+            for (var k = 1; relativeDiscrepancy > methodParams.MinDiscrepancy && k < methodParams.MaxIterations; k++)
             {
                 Iterate(matrix, factorizationMatrix, methodData);
-                relativeDiscrepancy = Math.Norm(discrepancy) / fNorm;
+                relativeDiscrepancy = Math.Norm(methodData.Discrepancy) / fNorm;
             }
+
             Sole.UpperTriangleInverseMethod(factorizationMatrix.U, factorizationMatrix.Diag, initialX,
                 methodData.Solution);
             return initialX;
@@ -34,7 +35,7 @@
             U.Multiply(initialX, result);
         }
 
-        private static double[] MultiplyFourFuckingMatrix(SparseMatrix A, SparseMatrix factMatrix, double[] vector)
+        private static double[] MultiplyFourMatrix(SparseMatrix A, SparseMatrix factMatrix, double[] vector)
         {
             double[] result = new double[vector.Length];
 
@@ -46,25 +47,25 @@
             return vector;
         }
 
-        private static double[] MultiplySixFuckingMatrix(SparseMatrix A, SparseMatrix factorizationMatrix, double[] vector)
+        private static double[] MultiplySixMatrix(SparseMatrix A, SparseMatrix factorizationMatrix, double[] vector)
         {
             double[] result = new double[vector.Length];
             Sole.UpperTriangleInverseMethod(factorizationMatrix.U, factorizationMatrix.Diag, result, vector);
 
-            return MultiplyFourFuckingMatrix(A, factorizationMatrix, A.Multiply(result));
+            return MultiplyFourMatrix(A, factorizationMatrix, A.Multiply(result));
         }
 
-        private static void Iterate(SparseMatrix A, SparseMatrix factorizationMatrix, IterationVariables methodData)
+        private static void Iterate(SparseMatrix A, SparseMatrix factorizationMatrix, ref IterationVariables methodData)
         {
             var discrepancyScalarProduct = Math.ScalarProduct(methodData.Discrepancy, methodData.Discrepancy);
             methodData.Step = discrepancyScalarProduct /
                                 Math.ScalarProduct(
-                                    MultiplySixFuckingMatrix(A, factorizationMatrix, methodData.Descent),
+                                    MultiplySixMatrix(A, factorizationMatrix, methodData.Descent),
                                     methodData.Descent);
 
             methodData.Solution = methodData.Descent.Select((elem, index) => elem * methodData.Step + methodData.Solution[index]).ToArray();
 
-            methodData.Discrepancy = MultiplySixFuckingMatrix(A, factorizationMatrix, methodData.Descent)
+            methodData.Discrepancy = MultiplySixMatrix(A, factorizationMatrix, methodData.Descent)
                 .Select((elem, index) =>
                     methodData.Descent[index] - elem * methodData.Step)
                 .ToArray();
