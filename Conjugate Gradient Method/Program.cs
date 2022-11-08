@@ -23,8 +23,12 @@ namespace Conjugate_Gradient_Method
 
             double[] f = {107, 100, 104, 108,110,97};
 
-            MethodParams methodParams = new MethodParams(100000, 0.00000001);
-            double[] result = Solution.CalcX(matrix1,
+            ParamsReader paramsReader = new ParamsReader("kuslau.txt", "../../../Input/");
+            paramsReader.Read();
+
+            MethodParams methodParams = paramsReader.Read();
+
+            var result = Solution.CalcX(matrix1,
                 new double[] { 0, 0, 0, 0, 0, 0 },
                 f,
                 new(
@@ -33,11 +37,6 @@ namespace Conjugate_Gradient_Method
                     diag: new double[] { 1, 1, 1, 1, 1, 1 }),
                 methodParams
             );
-
-            foreach (var x in result)
-            {
-                Console.Write($"{x} ");
-            }
         }
     }
 }

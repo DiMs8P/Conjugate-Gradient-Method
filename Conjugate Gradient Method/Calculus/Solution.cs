@@ -17,6 +17,7 @@
             {
                 Iterate(matrix, factorizationMatrix, methodData);
                 relativeDiscrepancy = Math.Norm(methodData.Discrepancy) / fNorm;
+                Console.WriteLine($"{k}: {relativeDiscrepancy}");
             }
 
             Sole.UpperTriangleInverseMethod(factorizationMatrix.U, factorizationMatrix.Diag, initialX,
@@ -69,7 +70,7 @@
 
             methodData.Discrepancy = MultiplySixMatrix(A, factMatrix, methodData.Descent)
                 .Select((elem, index) =>
-                    methodData.Descent[index] - elem * methodData.Step)
+                    methodData.Discrepancy[index] - elem * methodData.Step)
                 .ToArray();
 
             methodData.Betta = Math.ScalarProduct(methodData.Discrepancy, methodData.Discrepancy) / discrepancyScalarProduct;
