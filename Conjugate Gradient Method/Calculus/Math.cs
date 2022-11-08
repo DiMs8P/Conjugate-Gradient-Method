@@ -5,18 +5,6 @@ namespace Conjugate_Gradient_Method.Calculus
 {
     public static class Math
     {
-        /*public T ScalarProduct(IEnumerable<T> x, IEnumerable<T> y)
-        {
-            var xEnumerator = x.GetEnumerator();
-            var yEnumerator = y.GetEnumerator();
-
-            double result = xEnumerator.Current * yEnumerator.Current;
-
-            while (xEnumerator.MoveNext())
-            {
-
-            }
-        }*/
 
         public static double ScalarProduct(double[] x, double[] y)
         {

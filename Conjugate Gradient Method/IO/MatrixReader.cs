@@ -23,7 +23,7 @@ namespace Conjugate_Gradient_Method.IO
                 u: new SparseMatrixTriangle(
                     ReadValuesVector(_paths.GGU).ToArray(),
                     ReadIndexesVector(_paths.IGU).ToArray(),
-                    ReadIndexesVector(_paths.JGL).ToArray()
+                    ReadIndexesVector(_paths.JGU).ToArray()
                 ),
                 diag: ReadValuesVector(_paths.DI).ToArray()
                 );

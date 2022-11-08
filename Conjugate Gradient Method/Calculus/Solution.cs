@@ -55,19 +55,19 @@
             return MultiplyFourMatrix(A, factorizationMatrix, A.Multiply(result));
         }
 
-        private static void Iterate(SparseMatrix A, SparseMatrix factorizationMatrix, IterationVariables methodData)
+        private static void Iterate(SparseMatrix A, SparseMatrix factMatrix, IterationVariables methodData)
         {
             var discrepancyScalarProduct = Math.ScalarProduct(methodData.Discrepancy, methodData.Discrepancy);
             methodData.Step = discrepancyScalarProduct /
                                 Math.ScalarProduct(
-                                    MultiplySixMatrix(A, factorizationMatrix, methodData.Descent),
+                                    MultiplySixMatrix(A, factMatrix, methodData.Descent),
                                     methodData.Descent);
 
             methodData.Solution = methodData.Descent
                 .Select((elem, index) => elem * methodData.Step + methodData.Solution[index])
                 .ToArray();
 
-            methodData.Discrepancy = MultiplySixMatrix(A, factorizationMatrix, methodData.Descent)
+            methodData.Discrepancy = MultiplySixMatrix(A, factMatrix, methodData.Descent)
                 .Select((elem, index) =>
                     methodData.Descent[index] - elem * methodData.Step)
                 .ToArray();
@@ -79,7 +79,6 @@
                 .ToArray();
         }
     }
-
 
 }
 

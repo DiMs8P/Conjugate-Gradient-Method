@@ -5,6 +5,8 @@ VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Conjugate Gradient Method", "Conjugate Gradient Method.csproj", "{DE2ABEC7-0E70-4938-AF46-EB6273E32F5C}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GradientMethod.Tests", "..\GradientMethod.Tests\GradientMethod.Tests.csproj", "{26DCA3CC-D1F1-4E35-8FD9-44A9E65C004D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{DE2ABEC7-0E70-4938-AF46-EB6273E32F5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DE2ABEC7-0E70-4938-AF46-EB6273E32F5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DE2ABEC7-0E70-4938-AF46-EB6273E32F5C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26DCA3CC-D1F1-4E35-8FD9-44A9E65C004D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26DCA3CC-D1F1-4E35-8FD9-44A9E65C004D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26DCA3CC-D1F1-4E35-8FD9-44A9E65C004D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26DCA3CC-D1F1-4E35-8FD9-44A9E65C004D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
