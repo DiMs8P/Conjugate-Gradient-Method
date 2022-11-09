@@ -1,4 +1,5 @@
 ﻿using Conjugate_Gradient_Method.Calculus;
+using Conjugate_Gradient_Method.Matrix;
 using Math = Conjugate_Gradient_Method.Calculus.Math;
 
 namespace GradientMethod.Tests
@@ -50,7 +51,7 @@ namespace GradientMethod.Tests
             var result = new double[f.Length];
             double minDiscrepancy = 0.0000001;
             MethodParams methodParams = new MethodParams(100000, minDiscrepancy);
-            result = Solution.CalcX(_matrix,
+            result = SGM.CalcX(_matrix,
                 new double[] { 0, 0, 0, 0, 0, 0 },
                 f,
                 new(
@@ -60,7 +61,7 @@ namespace GradientMethod.Tests
                 methodParams
             );
 
-            double discrepancy = Math.Norm(Solution.CalcDiscrepancy(result, expected)) / Math.Norm(expected);
+            double discrepancy = Math.Norm(SGM.CalcDiscrepancy(result, expected)) / Math.Norm(expected);
 
             Assert.Less(discrepancy, minDiscrepancy);
         }

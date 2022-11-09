@@ -1,5 +1,6 @@
 ﻿using Conjugate_Gradient_Method.Calculus;
 using Conjugate_Gradient_Method.IO;
+using Conjugate_Gradient_Method.Matrix;
 
 namespace Conjugate_Gradient_Method
 {
@@ -28,7 +29,7 @@ namespace Conjugate_Gradient_Method
 
             MethodParams methodParams = paramsReader.Read();
 
-            var result = Solution.CalcX(matrix1,
+            var result = SGM.CalcX(matrix1,
                 new double[] { 0, 0, 0, 0, 0, 0 },
                 f,
                 new(
