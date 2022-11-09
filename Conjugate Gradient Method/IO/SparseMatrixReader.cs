@@ -1,4 +1,5 @@
 ﻿using Conjugate_Gradient_Method.Calculus;
+using Conjugate_Gradient_Method.Matrix;
 
 namespace Conjugate_Gradient_Method.IO
 {

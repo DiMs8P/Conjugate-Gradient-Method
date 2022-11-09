@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Conjugate Gradient Method",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GradientMethod.Tests", "..\GradientMethod.Tests\GradientMethod.Tests.csproj", "{26DCA3CC-D1F1-4E35-8FD9-44A9E65C004D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Benchmark.IterationMethods", "..\Benchmark.IterationMethods\Benchmark.IterationMethods.csproj", "{84274EA3-486B-45D6-AF28-45B301826360}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GaussMethod", "..\GaussMethod\GaussMethod.csproj", "{132A637B-FFEF-4024-8A34-BB94C9E577F4}"
 EndProject
 Global
@@ -23,6 +25,10 @@ Global
 		{26DCA3CC-D1F1-4E35-8FD9-44A9E65C004D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{26DCA3CC-D1F1-4E35-8FD9-44A9E65C004D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{26DCA3CC-D1F1-4E35-8FD9-44A9E65C004D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{84274EA3-486B-45D6-AF28-45B301826360}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84274EA3-486B-45D6-AF28-45B301826360}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84274EA3-486B-45D6-AF28-45B301826360}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84274EA3-486B-45D6-AF28-45B301826360}.Release|Any CPU.Build.0 = Release|Any CPU
 		{132A637B-FFEF-4024-8A34-BB94C9E577F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{132A637B-FFEF-4024-8A34-BB94C9E577F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{132A637B-FFEF-4024-8A34-BB94C9E577F4}.Release|Any CPU.ActiveCfg = Release|Any CPU

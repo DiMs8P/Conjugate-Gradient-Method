@@ -1,6 +1,8 @@
-﻿namespace Conjugate_Gradient_Method.Calculus
+﻿using Conjugate_Gradient_Method.Matrix;
+
+namespace Conjugate_Gradient_Method.Calculus
 {
-    public static class Solution
+    public static class SGM
     {
         public static double[] CalcX(SparseMatrix matrix, double[] initialX, double[] f,
             SparseMatrix factorizationMatrix, MethodParams methodParams)
@@ -13,10 +15,12 @@
             var fNorm = Math.Norm(f);
             var relativeDiscrepancy = Math.Norm(methodData.Discrepancy) / fNorm;
 
+            var prevDiscDotProduct = Math.ScalarProduct(methodData.Discrepancy, methodData.Discrepancy);
             for (var k = 1; relativeDiscrepancy > methodParams.MinDiscrepancy && k < methodParams.MaxIterations; k++)
             {
-                Iterate(matrix, factorizationMatrix, methodData);
+                Iterate(matrix, factorizationMatrix, methodData, ref prevDiscDotProduct);
                 relativeDiscrepancy = Math.Norm(methodData.Discrepancy) / fNorm;
+                Console.WriteLine($"{k}: {relativeDiscrepancy}");
             }
 
             Sole.UpperTriangleInverseMethod(factorizationMatrix.U, factorizationMatrix.Diag, initialX,
@@ -55,13 +59,12 @@
             return MultiplyFourMatrix(A, factorizationMatrix, A.Multiply(result));
         }
 
-        private static void Iterate(SparseMatrix A, SparseMatrix factMatrix, IterationVariables methodData)
+        private static void Iterate(SparseMatrix A, SparseMatrix factMatrix, IterationVariables methodData, ref double prevDiscDotProduct)
         {
-            var discrepancyScalarProduct = Math.ScalarProduct(methodData.Discrepancy, methodData.Discrepancy);
-            methodData.Step = discrepancyScalarProduct /
-                                Math.ScalarProduct(
-                                    MultiplySixMatrix(A, factMatrix, methodData.Descent),
-                                    methodData.Descent);
+            methodData.Step = prevDiscDotProduct /
+                              Math.ScalarProduct(
+                                  MultiplySixMatrix(A, factMatrix, methodData.Descent),
+                                  methodData.Descent);
 
             methodData.Solution = methodData.Descent
                 .Select((elem, index) => elem * methodData.Step + methodData.Solution[index])
@@ -69,10 +72,12 @@
 
             methodData.Discrepancy = MultiplySixMatrix(A, factMatrix, methodData.Descent)
                 .Select((elem, index) =>
-                    methodData.Descent[index] - elem * methodData.Step)
+                    methodData.Discrepancy[index] - elem * methodData.Step)
                 .ToArray();
 
-            methodData.Betta = Math.ScalarProduct(methodData.Discrepancy, methodData.Discrepancy) / discrepancyScalarProduct;
+            var curDiscDotProduct = Math.ScalarProduct(methodData.Discrepancy, methodData.Discrepancy);
+            methodData.Betta = curDiscDotProduct / prevDiscDotProduct;
+            prevDiscDotProduct = curDiscDotProduct;
 
             methodData.Descent = methodData.Descent
                 .Select((elem, index) => elem * methodData.Betta + methodData.Discrepancy[index])

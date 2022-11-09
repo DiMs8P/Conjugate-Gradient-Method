@@ -1,4 +1,4 @@
-﻿namespace Conjugate_Gradient_Method.Calculus
+﻿namespace Conjugate_Gradient_Method.Matrix
 {
     public class SparseMatrix
     {

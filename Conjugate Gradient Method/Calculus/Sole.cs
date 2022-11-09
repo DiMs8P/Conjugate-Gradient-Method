@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Numerics;
+using Conjugate_Gradient_Method.Matrix;
 
 namespace Conjugate_Gradient_Method.Calculus
 {

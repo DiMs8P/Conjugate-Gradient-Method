@@ -1,5 +1,6 @@
 ﻿
 using Conjugate_Gradient_Method.Calculus;
+using Conjugate_Gradient_Method.Matrix;
 
 namespace GradientMethod.Tests
 {

@@ -2,11 +2,11 @@
 
 namespace Conjugate_Gradient_Method.IO
 {
-    public class ParamsReader<T> : FileReader<MethodParams>
+    public class ParamsReader : FileReader<MethodParams>
     {
         private readonly string _fileName;
 
-        protected ParamsReader(string fileName, string rootPath)
+        public ParamsReader(string fileName, string rootPath)
             : base(rootPath)
         {
             _fileName = fileName;
