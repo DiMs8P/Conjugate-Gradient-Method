@@ -2,11 +2,11 @@
 
 namespace Conjugate_Gradient_Method.IO
 {
-    public class MatrixReader : FileReader<SparseMatrix>
+    public class SparseMatrixReader : FileReader<SparseMatrix>
     {
         private readonly SparseMatrixFilesProvider _paths;
 
-        public MatrixReader(SparseMatrixFilesProvider paths, string rootPath)
+        public SparseMatrixReader(SparseMatrixFilesProvider paths, string rootPath)
             : base(rootPath)
         {
             _paths = paths;

@@ -1,0 +1,9 @@
+﻿0.000000000001
+1.025
+30000
+2
+
+*accuracy*
+*relaxation*
+*maxIter*
+*diags shift*
