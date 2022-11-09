@@ -18,7 +18,7 @@ namespace Conjugate_Gradient_Method.Matrix
                 yield return new IndexValue(_columnPtr[i], Values[i]);
         }
 
-        public void Multiply(double[] vector, double[] result)
+        public virtual void Multiply(double[] vector, double[] result)
         {
             if (vector.Length != result.Length) throw new IndexOutOfRangeException(nameof(vector));
 
@@ -31,7 +31,7 @@ namespace Conjugate_Gradient_Method.Matrix
             }
         }
 
-        public void MultiplyTranspose(double[] vector, double[] result)
+        public virtual void MultiplyTranspose(double[] vector, double[] result)
         {
             if (vector.Length != result.Length) throw new IndexOutOfRangeException(nameof(vector));
 
