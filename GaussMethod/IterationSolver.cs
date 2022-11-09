@@ -19,7 +19,7 @@ namespace GaussMethod
             _logger = logger;
         }
 
-        public double[] GaussMethod(DiagMatrix matrix, double[] x, double[] f, MethodData parameters)
+        public double[] GaussMethod(DiagMatrix matrix, double[] x, double[] f, GaussMethodParams parameters)
         {
             var fNorm = VectorMath.GetNorm(f);
             var discrepancyNorm = fNorm;
@@ -48,7 +48,7 @@ namespace GaussMethod
             IList<double> x,
             IReadOnlyList<double> f,
             IReadOnlyList<double> prevX,
-            MethodData parameters,
+            GaussMethodParams parameters,
             IReadOnlyList<int> indexes, 
             out double discrepancyNorm
             )

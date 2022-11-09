@@ -1,8 +1,10 @@
-﻿namespace GaussMethod.Generators
+﻿using GaussMethod.Types;
+
+namespace Benchmark.IterationMethods.Setups
 {
-    public class Gilbert5X5TestGenerator
+    internal class Gilbert5X5TestGenerator
     {
-        public static (DiagMatrix matrix, double[] f, double[] x) GetTest()
+        public static (DiagMatrix matrix, double[] x, double[] f) GetGaussTest()
         {
             var diags = new double[][]
             {
@@ -22,10 +24,10 @@
             var f = new double[5];
 
             for (var i = 0; i < 5; i++)
-                for (var j = 0; j < 5; j++)
-                    f[i] += (j + 1d) / (i + j + 1d);
+            for (var j = 0; j < 5; j++)
+                f[i] += (j + 1d) / (i + j + 1d);
 
-            return (new DiagMatrix(diags), f, x);
+            return (new DiagMatrix(diags), x, f);
         }
     }
 }

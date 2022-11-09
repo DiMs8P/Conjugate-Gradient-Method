@@ -1,5 +1,4 @@
 ﻿using Conjugate_Gradient_Method.IO;
-using GaussMethod.Generators;
 using GaussMethod.IO;
 using GaussMethod.Logging;
 using GaussMethod.Types;
@@ -16,7 +15,7 @@ namespace GaussMethod
             MatrixReader matrixReader = new("A.txt", Root);
 
             const int diagsShift = 2;
-            MethodData parameters = new(
+            GaussMethodParams parameters = new(
                 Accuracy: 0.000000000001,
                 Relaxation: 1.025,
                 MaxIteration: 30000
@@ -40,9 +39,6 @@ namespace GaussMethod
 
             foreach (var elem in solution)
                 Console.WriteLine(elem);
-
-            var t = Gilbert5X5TestGenerator.GetTest();
         }
-
     }
 }

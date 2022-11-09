@@ -11,4 +11,8 @@
     <ProjectReference Include="..\Conjugate Gradient Method\Conjugate Gradient Method.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Generators\" />
+  </ItemGroup>
+
 </Project>
