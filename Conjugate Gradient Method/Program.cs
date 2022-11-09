@@ -8,7 +8,7 @@ namespace Conjugate_Gradient_Method
     {
         static void Main(string[] args)
         {
-            MatrixReader reader = new MatrixReader(
+            SparseMatrixReader reader = new SparseMatrixReader(
                 new SparseMatrixFilesProvider(
                     "di.txt",
                     "ggl.txt",
