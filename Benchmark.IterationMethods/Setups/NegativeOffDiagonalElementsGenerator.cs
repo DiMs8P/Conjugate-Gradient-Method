@@ -6,7 +6,7 @@ namespace Benchmark.IterationMethods.Setups
 {
     internal class NegativeExternDiagonalElementsGenerator
     {
-        private const string Root = "../../../Input/";
+        private const string Root = "C:\\Users\\Dima\\Desktop\\Input\\";
 
         public static (DiagMatrix matrix, double[] x, double[] f) GetGaussTest()
         {

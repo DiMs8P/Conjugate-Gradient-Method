@@ -15,8 +15,6 @@
     <ProjectReference Include="..\GaussMethod\GaussMethod.csproj" />
   </ItemGroup>
 
-
-
   <ItemGroup>
     <ProjectReference Include="..\Conjugate Gradient Method\Conjugate Gradient Method.csproj" />
   </ItemGroup>

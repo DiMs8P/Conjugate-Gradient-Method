@@ -6,6 +6,9 @@ namespace Conjugate_Gradient_Method.Matrix
     {
         public IEnumerable<IndexValue> ColumnIndexValuesByRow(int rowIndex)
         {
+            if (_rowPtr.Length == 0) 
+                yield break;
+
             if (rowIndex < 0) throw new ArgumentOutOfRangeException(nameof(rowIndex));
 
             var end = _rowPtr[rowIndex];
@@ -18,8 +21,11 @@ namespace Conjugate_Gradient_Method.Matrix
                 yield return new IndexValue(_columnPtr[i], Values[i]);
         }
 
-        public virtual void Multiply(double[] vector, double[] result)
+        public void Multiply(double[] vector, double[] result)
         {
+            if (_rowPtr.Length == 0)
+                return;
+
             if (vector.Length != result.Length) throw new IndexOutOfRangeException(nameof(vector));
 
             for (var i = 0; i < vector.Length; i++)
@@ -31,8 +37,11 @@ namespace Conjugate_Gradient_Method.Matrix
             }
         }
 
-        public virtual void MultiplyTranspose(double[] vector, double[] result)
+        public void MultiplyTranspose(double[] vector, double[] result)
         {
+            if (_rowPtr.Length == 0)
+                return;
+
             if (vector.Length != result.Length) throw new IndexOutOfRangeException(nameof(vector));
 
             for (var i = 0; i < vector.Length; i++)
@@ -43,7 +52,6 @@ namespace Conjugate_Gradient_Method.Matrix
                 }
             }
         }
-
         public double[] Values { get; }
         public ReadOnlySpan<int> RowPtr => new(_rowPtr);
         public ReadOnlySpan<int> ColumnPtr => new(_columnPtr);
@@ -58,5 +66,8 @@ namespace Conjugate_Gradient_Method.Matrix
             _columnPtr = columnPtr;
         }
 
+        public SparseMatrixTriangle() : this(Array.Empty<double>(), Array.Empty<int>(), Array.Empty<int>())
+        {
+        }
     }
 }

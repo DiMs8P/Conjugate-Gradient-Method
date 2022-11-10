@@ -1,6 +1,6 @@
 ﻿namespace GaussMethod.Types
 {
-    public record MethodData(
+    public record GaussMethodParams(
         double Accuracy,
         double Relaxation,
         int MaxIteration

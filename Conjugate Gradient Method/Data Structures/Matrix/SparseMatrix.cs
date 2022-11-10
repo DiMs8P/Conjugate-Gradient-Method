@@ -13,6 +13,12 @@
             Diag = diag;
         }
 
+        public SparseMatrix(double[] diag)
+        {
+            L = new SparseMatrixTriangle();
+            U = new SparseMatrixTriangle();
+            Diag = diag;
+        }
         public double[] Multiply(double[] vector)
         {
             var result = new double[vector.Length];

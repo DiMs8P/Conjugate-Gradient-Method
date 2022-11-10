@@ -8,11 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Conjugate Gradient Method\Conjugate Gradient Method.csproj" />
+    <Compile Remove="Generators\**" />
+    <EmbeddedResource Remove="Generators\**" />
+    <None Remove="Generators\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Generators\" />
+    <ProjectReference Include="..\Conjugate Gradient Method\Conjugate Gradient Method.csproj" />
   </ItemGroup>
 
 </Project>

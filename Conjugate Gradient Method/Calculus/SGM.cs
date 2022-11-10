@@ -20,7 +20,7 @@ namespace Conjugate_Gradient_Method.Calculus
             {
                 Iterate(matrix, factorizationMatrix, methodData, ref prevDiscDotProduct);
                 relativeDiscrepancy = Math.Norm(methodData.Discrepancy) / fNorm;
-                Console.WriteLine($"{k}: {relativeDiscrepancy}");
+                //Console.WriteLine($"{k}: {relativeDiscrepancy}");
             }
 
             Sole.UpperTriangleInverseMethod(factorizationMatrix.U, factorizationMatrix.Diag, initialX,

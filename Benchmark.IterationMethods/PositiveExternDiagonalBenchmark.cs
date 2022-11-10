@@ -3,10 +3,14 @@ using GaussMethod;
 using Benchmark.IterationMethods.Setups;
 using BenchmarkDotNet.Attributes;
 using GaussMethod.Logging;
+using BenchmarkDotNet.Code;
+using Conjugate_Gradient_Method.Calculus;
+using Conjugate_Gradient_Method.Matrix;
+using Benchmark.IterationMethods.Setups.SparceGenerators;
 
 namespace Benchmark.IterationMethods
 {
-    internal class PositiveExternDiagonalBenchmark
+    public class PositiveExternDiagonalBenchmark
     {
         private DiagMatrix DiagMatrix;
         private double[] F;
@@ -14,8 +18,34 @@ namespace Benchmark.IterationMethods
         private GaussMethodParams _gaussMethodParams;
         private IterationSolver GaussSolver;
 
+        private SparseMatrix _matrix;
+        private SparseMatrix _factMatrix1;
+        private SparseMatrix _factMatrix2;
+        //private SparseMatrix _factMatrix3;
+        private MethodParams _gradientMethodParams;
+
         [GlobalSetup]
         public void Setup()
+        {
+            GaussSetup();
+            GradientSetup();
+        }
+        public void GradientSetup()
+        {
+            Sparse10X10Generator generator = new Sparse10X10Generator();
+            _matrix = generator.Matrix;
+
+            _factMatrix1 = new SparseMatrix(_matrix.Diag);
+
+            double[] identity = _matrix.Diag.Select(x => 1.0).ToArray();
+            _factMatrix2 = new SparseMatrix(identity);
+
+            //_factMatrix3 = new SparseMatrix(_matrix.Diag);
+
+            _gradientMethodParams = new MethodParams(30000, 0.000000000001);
+        }
+
+        public void GaussSetup()
         {
             var gaussSetup = PositiveExternDiagonalElementsGenerator.GetGaussTest();
             DiagMatrix = gaussSetup.matrix;
@@ -34,13 +64,21 @@ namespace Benchmark.IterationMethods
         }
 
         [Benchmark]
-        public double[] Gauss() => 
+        public double[] Gauss() =>
             GaussSolver.GaussMethod(DiagMatrix, StartX, F, _gaussMethodParams);
 
         [Benchmark]
-        public void Gradient()
-        {
+        public double[] GradientIdentity() =>
+             SGM.CalcX(_matrix, StartX, F, _factMatrix1, _gradientMethodParams);
 
-        }
+        [Benchmark]
+        public double[] GradientDiag() =>
+            SGM.CalcX(_matrix, StartX, F, _factMatrix2, _gradientMethodParams);
+
+        /*[Benchmark]
+        public void GradientLU()
+        {
+            return SGM.CalcX(_matrix, StartX, F, _factMatrix2, new MethodParams());
+        }*/
     }
 }

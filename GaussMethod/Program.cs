@@ -5,6 +5,7 @@ using GaussMethod.Types;
 
 namespace GaussMethod
 {
+
     public class Program
     {
         private const string Root = "../../../Input/";
