@@ -1,6 +1,6 @@
-﻿0.000000000001
+﻿Program.Accuracy
 1.025
-30000
+Program.MaxIteration
 2
 
 *accuracy*

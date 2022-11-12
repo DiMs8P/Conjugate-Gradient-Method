@@ -3,7 +3,6 @@ using GaussMethod;
 using Benchmark.IterationMethods.Setups;
 using BenchmarkDotNet.Attributes;
 using GaussMethod.Logging;
-using BenchmarkDotNet.Code;
 using Conjugate_Gradient_Method.Calculus;
 using Conjugate_Gradient_Method.Matrix;
 using Benchmark.IterationMethods.Setups.SparceGenerators;
@@ -42,7 +41,7 @@ namespace Benchmark.IterationMethods
 
             //_factMatrix3 = new SparseMatrix(_matrix.Diag);
 
-            _gradientMethodParams = new MethodParams(30000, 0.000000000001);
+            _gradientMethodParams = new MethodParams(Program.MaxIteration, Program.Accuracy);
         }
 
         public void GaussSetup()
@@ -53,9 +52,9 @@ namespace Benchmark.IterationMethods
             F = gaussSetup.f;
 
             _gaussMethodParams = new GaussMethodParams(
-                Accuracy: 0.000000000001,
+                Accuracy: Program.Accuracy,
                 Relaxation: 1.025, // Is it optimal relaxation???
-                MaxIteration: 30000
+                MaxIteration: Program.MaxIteration
             );
 
             IIterationMethodLogger logger = new DisabledLogger();

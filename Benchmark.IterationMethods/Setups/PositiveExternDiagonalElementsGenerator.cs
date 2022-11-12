@@ -6,7 +6,7 @@ namespace Benchmark.IterationMethods.Setups;
 
 public class PositiveExternDiagonalElementsGenerator
 {
-    private const string Root = "C:\\Users\\Dima\\Desktop\\Input\\";
+    private const string Root = Program.GaussRootPath;
 
     public static (DiagMatrix matrix, double[] x, double[] f) GetGaussTest()
     {

@@ -41,9 +41,9 @@ namespace Benchmark.IterationMethods
             F = gaussSetup.f;
 
             _gaussMethodParams = new GaussMethodParams(
-                Accuracy: 0.000000000001,
+                Accuracy: Program.Accuracy,
                 Relaxation: 1.025, // Is it optimal relaxation???
-                MaxIteration: 30000
+                MaxIteration: Program.MaxIteration
             );
 
             IIterationMethodLogger logger = new DisabledLogger();
@@ -52,7 +52,6 @@ namespace Benchmark.IterationMethods
         }
         public void GradientSetup()
         {
-            Sparse10X10Generator generator = new Sparse10X10Generator();
             _matrix = SparseHilbertGenerator.Generate(N);
 
             _factMatrix1 = new SparseMatrix(_matrix.Diag);
@@ -62,18 +61,15 @@ namespace Benchmark.IterationMethods
 
             //_factMatrix3 = new SparseMatrix(_matrix.Diag);
 
-            _gradientMethodParams = new MethodParams(30000, 0.000000000001);
+            _gradientMethodParams = new MethodParams(Program.MaxIteration, Program.Accuracy);
         }
 
         [Benchmark]
         public double[] Gauss() => 
             GaussSolver.GaussMethod(DiagMatrix, StartX, F, _gaussMethodParams);
-
-
         [Benchmark]
         public double[] GradientIdentity() =>
             SGM.CalcX(_matrix, StartX, F, _factMatrix1, _gradientMethodParams);
-
         [Benchmark]
         public double[] GradientDiag() =>
             SGM.CalcX(_matrix, StartX, F, _factMatrix2, _gradientMethodParams);

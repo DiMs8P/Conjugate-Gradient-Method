@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using System.Security.Principal;
-using System.Text;
-using System.Threading.Tasks;
-using Benchmark.IterationMethods.Setups.SparceGenerators;
+﻿using Benchmark.IterationMethods.Setups.SparceGenerators;
 using BenchmarkDotNet.Attributes;
 using Conjugate_Gradient_Method.Calculus;
 using Conjugate_Gradient_Method.IO;
@@ -33,7 +26,7 @@ namespace Benchmark.IterationMethods
 
             InitF();
 
-            _params = new MethodParams(30000, 0.000000000001);
+            _params = new MethodParams(Program.MaxIteration, Program.Accuracy);
         }
 
         private void InitFactMatrix()
