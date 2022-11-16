@@ -20,7 +20,7 @@ namespace Benchmark.IterationMethods
         private SparseMatrix _matrix;
         private SparseMatrix _factMatrix1;
         private SparseMatrix _factMatrix2;
-        //private SparseMatrix _factMatrix3;
+        private SparseMatrix _factMatrix3;
         private MethodParams _gradientMethodParams;
 
         [GlobalSetup]
@@ -54,14 +54,20 @@ namespace Benchmark.IterationMethods
             _matrix.L = InvertTriangle.Invert(_matrix.L);
             _matrix.U = InvertTriangle.Invert(_matrix.U);
 
-            _factMatrix1 = new SparseMatrix(_matrix.Diag);
-
-            double[] identity = _matrix.Diag.Select(x => 1.0).ToArray();
-            _factMatrix2 = new SparseMatrix(identity);
-
-            //_factMatrix3 = new SparseMatrix(_matrix.Diag);
+            InitFactMatrix();
 
             _gradientMethodParams = new MethodParams(Program.MaxIteration, Program.Accuracy);
+        }
+
+        private void InitFactMatrix()
+        {
+            _factMatrix2 = new SparseMatrix(_matrix.Diag);
+
+            double[] identity = _matrix.Diag.Select(x => 1.0).ToArray();
+            _factMatrix1 = new SparseMatrix(identity);
+
+            LUDecompositor decompositor = new LUDecompositor(_matrix);
+            _factMatrix3 = decompositor.Decompose();
         }
 
 
@@ -77,10 +83,8 @@ namespace Benchmark.IterationMethods
         public double[] GradientDiag() =>
             SGM.CalcX(_matrix, StartX, F, _factMatrix2, _gradientMethodParams);
 
-        /*[Benchmark]
-        public void GradientLU()
-        {
-            return SGM.CalcX(_matrix, StartX, F, _factMatrix2, new MethodParams());
-        }*/
+        [Benchmark]
+        public double[] LUDecomposition() =>
+            SGM.CalcX(_matrix, StartX, F, _factMatrix3, _gradientMethodParams);
     }
 }

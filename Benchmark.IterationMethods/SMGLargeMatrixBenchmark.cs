@@ -1,13 +1,21 @@
-﻿using Benchmark.IterationMethods.Setups;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Numerics;
+using System.Security.Principal;
+using System.Text;
+using System.Threading.Tasks;
+using Benchmark.IterationMethods.Setups;
 using Benchmark.IterationMethods.Setups.SparceGenerators;
 using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Reports;
 using Conjugate_Gradient_Method.Calculus;
 using Conjugate_Gradient_Method.IO;
 using Conjugate_Gradient_Method.Matrix;
 
 namespace Benchmark.IterationMethods
 {
-    public class SMGDifferentFactorizatonMatrixBenchmark
+    public class SMGLargeMatrixBenchmark
     {
         private SparseMatrix _matrix;
         private double[] _initialX;
@@ -16,10 +24,13 @@ namespace Benchmark.IterationMethods
         private SparseMatrix _factMatrix3;
         private double[] f;
         private MethodParams _params;
-        public SMGDifferentFactorizatonMatrixBenchmark()
+
+        //[Params("945\\", "4545\\")]
+        public string folder = "945\\";
+        public SMGLargeMatrixBenchmark()
         {
-            Sparse10X10Generator generator = new Sparse10X10Generator();
-            _matrix = generator.Matrix;
+
+            InitMatrix();
 
             InitFactMatrix();
 
@@ -27,7 +38,24 @@ namespace Benchmark.IterationMethods
 
             InitF();
 
-            _params = new MethodParams(Program.MaxIteration, Program.Accuracy);
+            _params = new MethodParams(30000, 0.000000000001);
+        }
+
+        private void InitMatrix()
+        {
+            SparseMatrixReader reader = new SparseMatrixReader(
+                new SparseMatrixFilesProvider(
+                    "diag.txt",
+                    "ggl.txt",
+                    "igl.txt",
+                    "jgl.txt",
+                    "ggu.txt",
+                    "igu.txt",
+                    "jgu.txt"
+                ),
+                Program.RootPath + "Large\\" + folder);
+
+            _matrix = reader.Read();
         }
 
         private void InitFactMatrix()
@@ -42,19 +70,19 @@ namespace Benchmark.IterationMethods
         }
         private void InitF()
         {
-            DoubleVectorReader reader = new DoubleVectorReader("pr.txt", Program.RootPath);
+            DoubleVectorReader reader = new DoubleVectorReader("f.txt", Program.RootPath + "Large\\" + folder);
             f = reader.Read().ToArray();
         }
 
 
         [Benchmark]
-        public double[] Identity()
+        public double[] IdentityMatrix()
         {
             return SGM.CalcX(_matrix, _initialX, f, _factMatrix1, _params);
         }
 
         [Benchmark]
-        public double[] Diag()
+        public double[] DiagMatrix()
         {
             return SGM.CalcX(_matrix, _initialX, f, _factMatrix2, _params);
         }

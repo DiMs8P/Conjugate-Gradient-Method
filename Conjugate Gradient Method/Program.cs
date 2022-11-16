@@ -38,6 +38,7 @@ namespace Conjugate_Gradient_Method
                     diag: new double[] { 1, 1, 1, 1, 1, 1 }),
                 methodParams
             );
+
         }
     }
 }

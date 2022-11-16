@@ -3,7 +3,7 @@ using Conjugate_Gradient_Method.Matrix;
 
 namespace Benchmark.IterationMethods.Setups.SparceGenerators
 {
-    internal class Sparse10X10Generator
+    public class Sparse10X10Generator
     {
         public SparseMatrix Matrix { get; }
 
@@ -19,7 +19,7 @@ namespace Benchmark.IterationMethods.Setups.SparceGenerators
                     "igu.txt",
                     "jgu.txt"
                 ),
-                Program.RootPath);
+                Program.RootPath + "SparseInput\\");
 
             Matrix = reader.Read();
         }

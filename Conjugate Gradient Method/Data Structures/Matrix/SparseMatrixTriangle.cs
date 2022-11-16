@@ -6,7 +6,7 @@ namespace Conjugate_Gradient_Method.Matrix
     {
         public IEnumerable<IndexValue> ColumnIndexValuesByRow(int rowIndex)
         {
-            if (_rowPtr.Length == 0) 
+            if (_rowPtr.Length == 0)
                 yield break;
 
             if (rowIndex < 0) throw new ArgumentOutOfRangeException(nameof(rowIndex));
@@ -52,6 +52,26 @@ namespace Conjugate_Gradient_Method.Matrix
                 }
             }
         }
+
+        public ref double this[int row, int column]
+        {
+            get // чтение из позиции index
+            {
+                int counter = 0;
+                foreach (var (columnIndex, value) in ColumnIndexValuesByRow(row))
+                {
+                    if (columnIndex == column)
+                    {
+                        int prevIndex = row == 0 ? 0 : RowPtr[row - 1];
+                        return ref Values[prevIndex + counter];
+                    }
+                    counter++;
+
+                }
+                throw new ArgumentOutOfRangeException();
+            }
+        }
+
         public double[] Values { get; }
         public ReadOnlySpan<int> RowPtr => new(_rowPtr);
         public ReadOnlySpan<int> ColumnPtr => new(_columnPtr);
