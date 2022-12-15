@@ -14,7 +14,7 @@ namespace Benchmark.IterationMethods
 
         static void Main(string[] args)
         {
-            BenchmarkRunner.Run<NegativeExternDiagonalBenchmark>();
+            BenchmarkRunner.Run<SMGLargeMatrixBenchmark>();
         }
     }
 }

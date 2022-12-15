@@ -20,7 +20,7 @@ namespace Benchmark.IterationMethods
         private SparseMatrix _matrix;
         private SparseMatrix _factMatrix1;
         private SparseMatrix _factMatrix2;
-        //private SparseMatrix _factMatrix3;
+        private SparseMatrix _factMatrix3;
         private MethodParams _gradientMethodParams;
 
         public const int N = 5;
@@ -54,24 +54,34 @@ namespace Benchmark.IterationMethods
         {
             _matrix = SparseHilbertGenerator.Generate(N);
 
-            _factMatrix1 = new SparseMatrix(_matrix.Diag);
-
-            double[] identity = _matrix.Diag.Select(x => 1.0).ToArray();
-            _factMatrix2 = new SparseMatrix(identity);
-
-            //_factMatrix3 = new SparseMatrix(_matrix.Diag);
+            InitFactMatrix();
 
             _gradientMethodParams = new MethodParams(Program.MaxIteration, Program.Accuracy);
         }
 
+        private void InitFactMatrix()
+        {
+            _factMatrix2 = new SparseMatrix(_matrix.Diag);
+
+            double[] identity = _matrix.Diag.Select(x => 1.0).ToArray();
+            _factMatrix1 = new SparseMatrix(identity);
+
+            LUDecompositor decompositor = new LUDecompositor(_matrix);
+            _factMatrix3 = decompositor.Decompose();
+        }
+
         [Benchmark]
-        public double[] Gauss() => 
+        public double[] Gauss() =>
             GaussSolver.GaussMethod(DiagMatrix, StartX, F, _gaussMethodParams);
         [Benchmark]
-        public double[] GradientIdentity() =>
+        public double[] Identity() =>
             SGM.CalcX(_matrix, StartX, F, _factMatrix1, _gradientMethodParams);
         [Benchmark]
-        public double[] GradientDiag() =>
+        public double[] Diag() =>
             SGM.CalcX(_matrix, StartX, F, _factMatrix2, _gradientMethodParams);
+
+        [Benchmark]
+        public double[] LUDecomposition() =>
+            SGM.CalcX(_matrix, StartX, F, _factMatrix3, _gradientMethodParams);
     }
 }
